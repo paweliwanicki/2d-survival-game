@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://3qyyqt3t8rbt"]
+
+[ext_resource type="Texture2D" uid="uid://ba1qwkfstgg6v" path="res://scenes/game_object/player/player.png" id="1_iauvx"]
+[ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="2_24jr0"]
+[ext_resource type="PackedScene" uid="uid://dqheb87nm4rbi" path="res://scenes/abilities/wand_ability_controller/wand_ability_controller.tscn" id="2_tc6io"]
+[ext_resource type="PackedScene" uid="uid://cb2eyvlesgxaw" path="res://scenes/abilities/wand_ability/wand_ability.tscn" id="3_mgnqg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o3hvt"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a2v0k"]
+radius = 30.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("2_24jr0")
+
+[node name="AbilityManager" type="Node" parent="."]
+
+[node name="WandAbilityController" parent="AbilityManager" instance=ExtResource("2_tc6io")]
+wand_ability = ExtResource("3_mgnqg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_iauvx")
+offset = Vector2(2.08165e-12, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.08165e-12, -5)
+shape = SubResource("CircleShape2D_o3hvt")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_a2v0k")
