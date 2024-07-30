@@ -5,5 +5,4 @@
 
 [node name="VialDropComponent" type="Node"]
 script = ExtResource("1_gkiwf")
-drop_percent = null
 vial_scene = ExtResource("2_nrv4f")

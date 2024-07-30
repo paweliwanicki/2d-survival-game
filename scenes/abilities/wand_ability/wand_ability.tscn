@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cb2eyvlesgxaw"]
+[gd_scene load_steps=8 format=3 uid="uid://cb2eyvlesgxaw"]
 
 [ext_resource type="Texture2D" uid="uid://drcy7vr00hq2k" path="res://scenes/abilities/wand_ability/wand.png" id="1_3ys8t"]
+[ext_resource type="Script" path="res://scenes/abilities/wand_ability/wand_ability.gd" id="1_enqd1"]
 [ext_resource type="PackedScene" uid="uid://c7ykedgiwyt7n" path="res://scenes/components/hitbox_component/hitbox_component.tscn" id="2_c1tiu"]
 
 [sub_resource type="Animation" id="Animation_hy81g"]
@@ -107,6 +108,7 @@ _data = {
 size = Vector2(30, 30)
 
 [node name="WandAbility" type="Node2D"]
+script = ExtResource("1_enqd1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
