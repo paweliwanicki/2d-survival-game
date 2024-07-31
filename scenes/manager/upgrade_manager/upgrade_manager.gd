@@ -14,17 +14,17 @@ func _ready():
 func apply_upgrade(upgrade: AbilityUpgrade):
 	if upgrade == null:
 		return;
-	var selected_upgrade = upgrade_pool.pick_random() as AbilityUpgrade;
+	
 	var has_upgrade = current_upgrades.has(upgrade.id)
 	if !has_upgrade:
-		current_upgrades[selected_upgrade.id] = {
-			"resource": selected_upgrade,
+		current_upgrades[upgrade.id] = {
+			"resource": upgrade,
 			"quantity" : 1
 		}
 	else:
-		current_upgrades[selected_upgrade.id]["quantity"] += 1;
+		current_upgrades[upgrade.id]["quantity"] += 1;
 		
-	GameEvents.ability_upgrade_added.emit(selected_upgrade, current_upgrades);
+	GameEvents.ability_upgrade_added.emit(upgrade, current_upgrades);
 
 
 func pick_upgrades():

@@ -9,7 +9,7 @@ func _ready():
 	
 	
 func on_timer_timeout():
-	var player = get_tree().get_first_node_in_group("player") as Player;
+	var player = get_tree().get_first_node_in_group("player");
 	if player == null:
 		return;
 		
