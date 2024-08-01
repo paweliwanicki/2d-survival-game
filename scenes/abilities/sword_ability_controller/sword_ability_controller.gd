@@ -3,18 +3,17 @@ const MAX_RANGE = 60;
 
 @export var sword_ability: PackedScene;
 
-var damage = 5;
+var base_damage = 5;
+var additional_damage_percent = 1;
 var base_wait_time;
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	base_wait_time = $Timer.wait_time;
 	$Timer.timeout.connect(on_timer_timeout);
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added);
  
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass;
 
@@ -45,7 +44,7 @@ func on_timer_timeout():
 	
 	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer");
 	foreground_layer.add_child(sword_instance);
-	sword_instance.hitbox_component.damage = damage;
+	sword_instance.hitbox_component.damage = base_damage * additional_damage_percent;
 	sword_instance.global_position = player.global_position;
 	#sword_instance.global_position = closest_enemy.global_position;
 	#sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4;
@@ -57,12 +56,14 @@ func on_timer_timeout():
 
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	if upgrade.id != "attack_speed":
-		return;
-
-	var percent_reduction = current_upgrades["attack_speed"]["quantity"] * .1;
-	$Timer.wait_time = max(0.01, base_wait_time * (1 - percent_reduction));
-	$Timer.start();
+	var current_upgrade_quantity = current_upgrades[upgrade.id]["quantity"];
 	
+	if upgrade.id == "sword_attack_speed":
+		var percent_reduction = current_upgrade_quantity * .1;
+		$Timer.wait_time = max(0.01, base_wait_time * (1 - percent_reduction));
+		$Timer.start();
+	
+	if upgrade.id == "sword_damage":
+		additional_damage_percent = 1 + (current_upgrade_quantity * .1);
 	
 	

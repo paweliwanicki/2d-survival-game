@@ -1,15 +1,33 @@
 extends Node
 
-@export var upgrade_pool: Array[AbilityUpgrade];
 @export var experience_manager: ExperienceManager;
 @export var upgrade_screen_scene: PackedScene;
 
 var current_upgrades = {};
+var upgrade_pool: WeightedTable = WeightedTable.new();
+
+# axe
+var upgrade_axe = preload("res://resources/upgrades/axe.tres");
+var upgrade_axe_damage = preload("res://resources/upgrades/axe_damage.tres");
+var upgrade_axe_attack_speed = preload("res://resources/upgrades/axe_attack_speed.tres");
+
+# sword
+var upgrade_sword_damage = preload("res://resources/upgrades/sword_damage.tres");
+var upgrade_sword_attack_speed = preload("res://resources/upgrades/sword_attack_speed.tres");
 
 
 func _ready():
+	upgrade_pool.add_item(upgrade_axe, 10);
+	upgrade_pool.add_item(upgrade_sword_attack_speed, 10);
+	upgrade_pool.add_item(upgrade_sword_damage, 10);
 	experience_manager.level_up.connect(on_level_up);
 
+
+func update_upgrade_pool(selected_upgrade: AbilityUpgrade):
+	if selected_upgrade.id == upgrade_axe.id:
+		upgrade_pool.add_item(upgrade_axe_damage, 10);
+		upgrade_pool.add_item(upgrade_axe_attack_speed, 10);		
+		
 
 func apply_upgrade(upgrade: AbilityUpgrade):
 	if upgrade == null:
@@ -27,22 +45,20 @@ func apply_upgrade(upgrade: AbilityUpgrade):
 	if upgrade.max_quantity > 0:
 		var current_quantity = current_upgrades[upgrade.id]["quantity"];
 		if current_quantity == upgrade.max_quantity:
-			upgrade_pool = upgrade_pool.filter(func(pool_upgrade): return pool_upgrade.id != upgrade.id);
-			
-		
+			upgrade_pool.remove_item(upgrade);
+	update_upgrade_pool(upgrade);		
 	GameEvents.ability_upgrade_added.emit(upgrade, current_upgrades);
 
 
 func pick_upgrades():
-	var selected_upgrades: Array[AbilityUpgrade] = [];
-	var filtered_upgrades = upgrade_pool.duplicate();
+	var picked_upgrades: Array[AbilityUpgrade] = [];
 	for i in 2:
-		if filtered_upgrades.size() == 0:
+		if upgrade_pool.items.size() == picked_upgrades.size():
 			break;
-		var selected_upgrade = filtered_upgrades.pick_random() as AbilityUpgrade;
-		selected_upgrades.append(selected_upgrade);
-		filtered_upgrades = filtered_upgrades.filter(func (upgrade):  return upgrade.id != selected_upgrade.id);
-	return selected_upgrades;
+			
+		var picked_upgrade = upgrade_pool.pick_item(picked_upgrades) as AbilityUpgrade;
+		picked_upgrades.append(picked_upgrade);
+	return picked_upgrades;
 
 	
 func on_upgrade_selected(upgrade: AbilityUpgrade):
