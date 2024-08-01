@@ -1,7 +1,7 @@
 extends Node
-const MAX_RANGE = 40;
+const MAX_RANGE = 60;
 
-@export var wand_ability: PackedScene;
+@export var sword_ability: PackedScene;
 
 var damage = 5;
 var base_wait_time;
@@ -30,6 +30,7 @@ func on_timer_timeout():
 			
 	enemies = enemies.filter(func(enemy: Node2D): 
 		return enemy.global_position.distance_squared_to(player_position) < pow(MAX_RANGE,2))	
+		
 	if enemies.size() == 0:
 		return;	
 	
@@ -37,19 +38,22 @@ func on_timer_timeout():
 		var a_position = a.global_position.distance_squared_to(player_position)
 		var b_position = b.global_position.distance_squared_to(player_position)
 		return a_position < b_position
-		)
-	var closest_enemy = enemies[0] as Node2D;	
+		);
 		
-	var wand_instance = wand_ability.instantiate() as WandAbility;	
+	var closest_enemy = enemies[0] as Node2D;	
+	var sword_instance = sword_ability.instantiate() as SwordAbility;	
 	
 	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer");
-	foreground_layer.add_child(wand_instance);
-	wand_instance.hitbox_component.damage = damage;
-	wand_instance.global_position = closest_enemy.global_position;
-	wand_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4;
+	foreground_layer.add_child(sword_instance);
+	sword_instance.hitbox_component.damage = damage;
+	sword_instance.global_position = player.global_position;
+	#sword_instance.global_position = closest_enemy.global_position;
+	#sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4;
 	
-	var enemy_direction = closest_enemy.global_position - wand_instance.global_position;
-	wand_instance.rotation = enemy_direction.angle();
+	var enemy_direction = closest_enemy.global_position - sword_instance.global_position;
+	var enemy_direction_angle = enemy_direction.angle();
+	sword_instance.global_position += Vector2.RIGHT.rotated(enemy_direction_angle) * 10;
+	sword_instance.rotation = enemy_direction_angle;
 
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):

@@ -11,6 +11,8 @@ var number_colliding_bodies = 0;
 @onready var health_bar = $HealthBar;
 @onready var health_component: HealthComponent = $HealthComponent;
 @onready var abilities = $Abilities;
+@onready var animation_player = $AnimationPlayer;
+@onready var visuals = $Visuals;
 
 func _ready():
 	collision_area2d.body_entered.connect(on_body_entered)
@@ -26,6 +28,15 @@ func _process(delta):
 	var target_velocity = direction * MAX_SPEED;
 	velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING))
 	move_and_slide();
+	
+	if movement_vector.x != 0 || movement_vector.y != 0:
+		animation_player.play("walk");
+	else:
+		animation_player.play("RESET");
+	
+	var move_sign = sign(movement_vector.x);
+	if move_sign != 0:
+		visuals.scale = Vector2(move_sign, 1);
 	
 	
 func get_movement_vector(): 

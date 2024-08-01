@@ -24,6 +24,12 @@ func apply_upgrade(upgrade: AbilityUpgrade):
 	else:
 		current_upgrades[upgrade.id]["quantity"] += 1;
 		
+	if upgrade.max_quantity > 0:
+		var current_quantity = current_upgrades[upgrade.id]["quantity"];
+		if current_quantity == upgrade.max_quantity:
+			upgrade_pool = upgrade_pool.filter(func(pool_upgrade): return pool_upgrade.id != upgrade.id);
+			
+		
 	GameEvents.ability_upgrade_added.emit(upgrade, current_upgrades);
 
 
@@ -31,6 +37,8 @@ func pick_upgrades():
 	var selected_upgrades: Array[AbilityUpgrade] = [];
 	var filtered_upgrades = upgrade_pool.duplicate();
 	for i in 2:
+		if filtered_upgrades.size() == 0:
+			break;
 		var selected_upgrade = filtered_upgrades.pick_random() as AbilityUpgrade;
 		selected_upgrades.append(selected_upgrade);
 		filtered_upgrades = filtered_upgrades.filter(func (upgrade):  return upgrade.id != selected_upgrade.id);

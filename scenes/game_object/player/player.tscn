@@ -1,10 +1,95 @@
-[gd_scene load_steps=11 format=3 uid="uid://3qyyqt3t8rbt"]
+[gd_scene load_steps=13 format=3 uid="uid://3qyyqt3t8rbt"]
 
 [ext_resource type="Texture2D" uid="uid://ba1qwkfstgg6v" path="res://scenes/game_object/player/player.png" id="1_iauvx"]
 [ext_resource type="Script" path="res://scenes/components/health_component/health_component.gd" id="2_3m8pn"]
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="2_24jr0"]
-[ext_resource type="PackedScene" uid="uid://dqheb87nm4rbi" path="res://scenes/abilities/wand_ability_controller/wand_ability_controller.tscn" id="2_tc6io"]
-[ext_resource type="PackedScene" uid="uid://cb2eyvlesgxaw" path="res://scenes/abilities/wand_ability/wand_ability.tscn" id="3_mgnqg"]
+[ext_resource type="PackedScene" uid="uid://dqheb87nm4rbi" path="res://scenes/abilities/sword_ability_controller/sword_ability_controller.tscn" id="2_tc6io"]
+
+[sub_resource type="Animation" id="Animation_oqr3r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tvgbf"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.261799, 0.261799, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(0.482968, 2.63901, 3.13834, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1.1), Vector2(1.5, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7uctg"]
+_data = {
+"RESET": SubResource("Animation_oqr3r"),
+"walk": SubResource("Animation_tvgbf")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lalec"]
 bg_color = Color(0.247059, 0.14902, 0.192157, 1)
@@ -31,13 +116,17 @@ collision_layer = 0
 motion_mode = 1
 script = ExtResource("2_24jr0")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7uctg")
+}
+
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_3m8pn")
 
 [node name="Abilities" type="Node" parent="."]
 
 [node name="WandAbilityController" parent="Abilities" instance=ExtResource("2_tc6io")]
-wand_ability = ExtResource("3_mgnqg")
 
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -46,15 +135,22 @@ one_shot = true
 [node name="HealthBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(24, 4)
 offset_left = -12.0
-offset_top = -22.0
+offset_top = -25.0
 offset_right = 12.0
-offset_bottom = -18.0
+offset_bottom = -21.0
 pivot_offset = Vector2(12, 2)
 theme_override_styles/background = SubResource("StyleBoxFlat_lalec")
 theme_override_styles/fill = SubResource("StyleBoxFlat_wxjwo")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="Visuals" type="Node2D" parent="."]
+scale = Vector2(-1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("1_iauvx")
+offset = Vector2(2.08165e-12, -8)
 
 [node name="PickupArea2D" type="Area2D" parent="."]
 visible = false
@@ -72,10 +168,6 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea2D"]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_02gkn")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_iauvx")
-offset = Vector2(2.08165e-12, -8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.08165e-12, -5)
