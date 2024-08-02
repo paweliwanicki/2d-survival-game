@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://da3cthjxedjwc"]
+[gd_scene load_steps=22 format=3 uid="uid://da3cthjxedjwc"]
 
 [ext_resource type="Script" path="res://scenes/game_object/basic_enemy/basic_enemy.gd" id="1_1smte"]
 [ext_resource type="PackedScene" uid="uid://bp83ytdcnk3y8" path="res://scenes/components/health_component/health_component.tscn" id="2_kk38i"]
@@ -9,6 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://cy43r4v65p3li" path="res://scenes/components/velocity_component/velocity_component.tscn" id="4_knj62"]
 [ext_resource type="PackedScene" uid="uid://cl088l5oxju48" path="res://scenes/components/hit_flash_component/hit_flash_component.tscn" id="5_v0c02"]
 [ext_resource type="Shader" path="res://scenes/components/hit_flash_component/hit_flash_component.gdshader" id="6_3avlb"]
+[ext_resource type="AudioStream" uid="uid://danajcfgvhe8k" path="res://assets/audio/footstep_carpet_000.ogg" id="10_b8pph"]
+[ext_resource type="PackedScene" uid="uid://cjqaxrtp8cyhk" path="res://scenes/components/hit_random_stream_player_2d_component/hit_random_stream_player_2d_component.tscn" id="10_fuaxu"]
+[ext_resource type="AudioStream" uid="uid://bxbksxbwa7aeb" path="res://assets/audio/footstep_carpet_001.ogg" id="12_71c3u"]
+[ext_resource type="AudioStream" uid="uid://nytn8mj1vshg" path="res://assets/audio/footstep_carpet_002.ogg" id="13_owllp"]
+[ext_resource type="AudioStream" uid="uid://dp40lu3ma2dvk" path="res://assets/audio/footstep_carpet_003.ogg" id="14_q2wc4"]
+[ext_resource type="AudioStream" uid="uid://y6c8awjb7stc" path="res://assets/audio/footstep_carpet_004.ogg" id="15_soouq"]
 
 [sub_resource type="Animation" id="Animation_kjhb5"]
 length = 0.001
@@ -106,6 +112,10 @@ health_component = NodePath("../HealthComponent")
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Visuals/Sprite2D")
 hit_flash_material = SubResource("ShaderMaterial_br5to")
+
+[node name="HitRandomStreamPlayer2DComponent" parent="." instance=ExtResource("10_fuaxu")]
+max_distance = 300.0
+streams = Array[AudioStream]([ExtResource("10_b8pph"), ExtResource("12_71c3u"), ExtResource("13_owllp"), ExtResource("14_q2wc4"), ExtResource("15_soouq")])
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_528w7")]
 health_component = NodePath("../HealthComponent")

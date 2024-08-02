@@ -7,19 +7,23 @@ var current_upgrades = {};
 var upgrade_pool: WeightedTable = WeightedTable.new();
 
 # axe
-var upgrade_axe = preload("res://resources/upgrades/axe.tres");
-var upgrade_axe_damage = preload("res://resources/upgrades/axe_damage.tres");
-var upgrade_axe_attack_speed = preload("res://resources/upgrades/axe_attack_speed.tres");
+var upgrade_axe = preload("res://resources/upgrades/axe/axe.tres");
+var upgrade_axe_damage = preload("res://resources/upgrades/axe/axe_damage.tres");
+var upgrade_axe_attack_speed = preload("res://resources/upgrades/axe/axe_attack_speed.tres");
 
 # sword
-var upgrade_sword_damage = preload("res://resources/upgrades/sword_damage.tres");
-var upgrade_sword_attack_speed = preload("res://resources/upgrades/sword_attack_speed.tres");
+var upgrade_sword_damage = preload("res://resources/upgrades/sword/sword_damage.tres");
+var upgrade_sword_attack_speed = preload("res://resources/upgrades/sword/sword_attack_speed.tres");
 
+
+# player
+var upgrade_player_speed = preload("res://resources/upgrades/player/player_speed.tres");
 
 func _ready():
 	upgrade_pool.add_item(upgrade_axe, 10);
 	upgrade_pool.add_item(upgrade_sword_attack_speed, 10);
 	upgrade_pool.add_item(upgrade_sword_damage, 10);
+	upgrade_pool.add_item(upgrade_player_speed, 500);
 	experience_manager.level_up.connect(on_level_up);
 
 

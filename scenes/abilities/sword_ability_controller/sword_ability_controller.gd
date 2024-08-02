@@ -64,6 +64,7 @@ func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Diction
 		$Timer.start();
 	
 	if upgrade.id == "sword_damage":
-		additional_damage_percent = 1 + (current_upgrade_quantity * .1);
+		base_damage = 5 + (current_upgrade_quantity * 5);
+		#additional_damage_percent = 1 + (current_upgrade_quantity * .1);
 	
 	
