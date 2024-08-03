@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_41uxv")
+value = 0.1
 id = "sword_attack_speed"
 max_quantity = 9
 name = "Sword Attack Speed"

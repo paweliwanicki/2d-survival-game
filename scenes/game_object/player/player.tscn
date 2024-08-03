@@ -1,10 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://3qyyqt3t8rbt"]
+[gd_scene load_steps=20 format=3 uid="uid://3qyyqt3t8rbt"]
 
 [ext_resource type="Texture2D" uid="uid://ba1qwkfstgg6v" path="res://scenes/game_object/player/player.png" id="1_iauvx"]
 [ext_resource type="Script" path="res://scenes/components/health_component/health_component.gd" id="2_3m8pn"]
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="2_24jr0"]
 [ext_resource type="PackedScene" uid="uid://cy43r4v65p3li" path="res://scenes/components/velocity_component/velocity_component.tscn" id="2_pv7gi"]
 [ext_resource type="PackedScene" uid="uid://dqheb87nm4rbi" path="res://scenes/abilities/sword_ability_controller/sword_ability_controller.tscn" id="2_tc6io"]
+[ext_resource type="PackedScene" uid="uid://cjqaxrtp8cyhk" path="res://scenes/components/random_audio_player_2d_component/random_audio_player_2d_component.tscn" id="2_wdq0l"]
+[ext_resource type="AudioStream" uid="uid://8nhdus2sb7ef" path="res://assets/audio/impactMining_000.ogg" id="3_0knwv"]
+[ext_resource type="AudioStream" uid="uid://bqtwupvkd4fgx" path="res://assets/audio/impactMining_001.ogg" id="4_qoqb1"]
+[ext_resource type="AudioStream" uid="uid://vckl5pp0u3gn" path="res://assets/audio/impactMining_002.ogg" id="5_t8l0h"]
+[ext_resource type="AudioStream" uid="uid://b1p7g6hhx1rpf" path="res://assets/audio/impactMining_003.ogg" id="6_1k7xo"]
+[ext_resource type="AudioStream" uid="uid://bg33dhi6qo6uj" path="res://assets/audio/impactMining_004.ogg" id="7_40d6e"]
 
 [sub_resource type="Animation" id="Animation_oqr3r"]
 length = 0.001
@@ -116,6 +122,9 @@ radius = 5.0
 collision_layer = 0
 motion_mode = 1
 script = ExtResource("2_24jr0")
+
+[node name="HitRandomAudioPlayer2DComponent" parent="." instance=ExtResource("2_wdq0l")]
+streams = Array[AudioStream]([ExtResource("3_0knwv"), ExtResource("4_qoqb1"), ExtResource("5_t8l0h"), ExtResource("6_1k7xo"), ExtResource("7_40d6e")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

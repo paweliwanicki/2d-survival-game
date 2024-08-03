@@ -1,8 +1,8 @@
 extends CanvasLayer
 class_name EndScreen;
 
-@onready var restart_button  = %RestartButton;
-@onready var quit_button  = %QuitButton;
+@onready var restart_button  = %RestartSoundButton;
+@onready var quit_button  = %QuitSoundButton;
 @onready var title_label  = %TitleLabel;
 @onready var description_label  = %DescriptionLabel;
 @onready var panel_container = %PanelContainer;

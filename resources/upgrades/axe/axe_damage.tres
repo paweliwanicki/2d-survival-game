@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_csx3r")
+value = 0.15
 id = "axe_damage"
 max_quantity = 9
 name = "Axe Damage"

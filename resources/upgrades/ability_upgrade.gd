@@ -1,6 +1,7 @@
 extends Resource
 class_name AbilityUpgrade;
 
+@export var value: float;
 @export var id: String;
 @export var max_quantity: int;
 @export var name: String;

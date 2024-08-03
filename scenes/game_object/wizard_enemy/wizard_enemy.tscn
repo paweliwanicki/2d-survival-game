@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cy43r4v65p3li" path="res://scenes/components/velocity_component/velocity_component.tscn" id="3_tey51"]
 [ext_resource type="PackedScene" uid="uid://cnvov7sivoblm" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="4_amx46"]
 [ext_resource type="PackedScene" uid="uid://bh4dkh054nbht" path="res://scenes/components/vial_drop_component/vial_drop_component.tscn" id="4_h0chd"]
-[ext_resource type="PackedScene" uid="uid://cjqaxrtp8cyhk" path="res://scenes/components/hit_random_stream_player_2d_component/hit_random_stream_player_2d_component.tscn" id="8_ejvv1"]
+[ext_resource type="PackedScene" uid="uid://cjqaxrtp8cyhk" path="res://scenes/components/random_audio_player_2d_component/random_audio_player_2d_component.tscn" id="8_ejvv1"]
 [ext_resource type="AudioStream" uid="uid://danajcfgvhe8k" path="res://assets/audio/footstep_carpet_000.ogg" id="9_b52f4"]
 [ext_resource type="AudioStream" uid="uid://bxbksxbwa7aeb" path="res://assets/audio/footstep_carpet_001.ogg" id="10_2ebin"]
 [ext_resource type="AudioStream" uid="uid://nytn8mj1vshg" path="res://assets/audio/footstep_carpet_002.ogg" id="11_ypcht"]

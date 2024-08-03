@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_fma2i")
+value = 5.0
 id = "sword_damage"
 max_quantity = 10
 name = "Sword Damage"

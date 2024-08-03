@@ -59,12 +59,12 @@ func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Diction
 	var current_upgrade_quantity = current_upgrades[upgrade.id]["quantity"];
 	
 	if upgrade.id == "sword_attack_speed":
-		var percent_reduction = current_upgrade_quantity * .1;
+		var percent_reduction = current_upgrade_quantity * upgrade.value;
 		$Timer.wait_time = max(0.01, base_wait_time * (1 - percent_reduction));
 		$Timer.start();
 	
 	if upgrade.id == "sword_damage":
-		base_damage = 5 + (current_upgrade_quantity * 5);
+		base_damage = 5 + (current_upgrade_quantity * upgrade.value);
 		#additional_damage_percent = 1 + (current_upgrade_quantity * .1);
 	
 	
