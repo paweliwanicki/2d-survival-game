@@ -23,7 +23,6 @@ func _process(delta):
 		arena_difficulty_increased.emit(arena_difficulty);
 	
 
-
 func get_elapsed_time():
 	return timer.wait_time - timer.time_left;
 
@@ -31,3 +30,5 @@ func get_elapsed_time():
 func on_timer_timeout():
 	var end_screen_instance = end_screen_scene.instantiate();
 	add_child(end_screen_instance)
+	end_screen_instance.play_jingle();
+	MetaProgression.save_file();

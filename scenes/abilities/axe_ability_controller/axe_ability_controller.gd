@@ -21,7 +21,7 @@ func on_timer_timeout():
 	if foreground == null:
 		return;
 			
-	var axe_instance = axe_ability_scene.instwantiate() as Node2D;
+	var axe_instance = axe_ability_scene.instantiate() as Node2D;
 	foreground.add_child(axe_instance);
 	axe_instance.global_position = player.global_position;
 	axe_instance.hitbox_component.damage = base_damage * additional_damage_percent;
@@ -29,7 +29,6 @@ func on_timer_timeout():
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
 	var current_upgrade_quantity = current_upgrades[upgrade.id]["quantity"];
-	
 	if upgrade.id == "axe_attack_speed":
 		var percent_reduction = current_upgrade_quantity * upgrade.value;
 		$Timer.wait_time = max(0.01, base_wait_time * (1 - percent_reduction));

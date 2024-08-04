@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_cucuj")
+value = 0.1
 id = "player_speed"
 max_quantity = 9
 name = "Player Move Speed"

@@ -1,7 +1,7 @@
 extends CanvasLayer
 class_name EndScreen;
 
-@onready var restart_button  = %RestartSoundButton;
+@onready var continue_button  = %ContinueSoundButton;
 @onready var quit_button  = %QuitSoundButton;
 @onready var title_label  = %TitleLabel;
 @onready var description_label  = %DescriptionLabel;
@@ -16,18 +16,31 @@ func _ready():
 	
 	
 	get_tree().paused = true;
-	restart_button.pressed.connect(on_restart_button_pressed)
+	continue_button.pressed.connect(on_continue_button_pressed)
 	quit_button.pressed.connect(on_quit_button_pressed)
 	
 	
 func set_defeat():
 	title_label.text = "Defeat!";
 	description_label.text = "You died!";
+	
+	
+func play_jingle(defeat: bool = false):
+	if defeat:
+		$DefeatStreamPlayer2D.play()
+	else:
+		$VictoryStreamPlayer2D.play()
+	
 
-func on_restart_button_pressed():
-		get_tree().paused = false;
-		get_tree().change_scene_to_file("res://scenes/main/main.tscn");
+func on_continue_button_pressed():
+	ScreenTransition.transition();
+	await ScreenTransition.transitioned_halfway;
+	get_tree().paused = false;
+	get_tree().change_scene_to_file("res://scenes/ui/meta_menu.tscn");
 		
 		
 func on_quit_button_pressed():
-		get_tree().quit();
+	ScreenTransition.transition();
+	await ScreenTransition.transitioned_halfway;
+	get_tree().paused = false;
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu/main_menu.tscn")
