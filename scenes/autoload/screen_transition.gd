@@ -16,7 +16,6 @@ func transition():
 func transition_to_scene(scene_path: String):
 	transition();
 	await transitioned_halfway;
-	print('tera')
 	get_tree().change_scene_to_file(scene_path);
 	
 	

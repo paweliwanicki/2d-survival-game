@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=20 format=3 uid="uid://bfkoqibi2n3sp"]
 
-[ext_resource type="Texture2D" uid="uid://banwtgp2n4jvr" path="res://assets/ui.png" id="1_p7f8g"]
+[ext_resource type="Texture2D" uid="uid://banwtgp2n4jvr" path="res://assets/ui/ui.png" id="1_p7f8g"]
 [ext_resource type="FontFile" uid="uid://cynmtvgfyxrhm" path="res://resources/theme/Bitfantasy.ttf" id="1_qd5gf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wogna"]

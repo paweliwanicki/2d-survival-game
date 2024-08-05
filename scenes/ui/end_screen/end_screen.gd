@@ -36,7 +36,7 @@ func on_continue_button_pressed():
 	ScreenTransition.transition();
 	await ScreenTransition.transitioned_halfway;
 	get_tree().paused = false;
-	get_tree().change_scene_to_file("res://scenes/ui/meta_menu.tscn");
+	get_tree().change_scene_to_file("res://scenes/ui/meta_menu/meta_menu.tscn");
 		
 		
 func on_quit_button_pressed():

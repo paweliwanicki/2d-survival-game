@@ -121,11 +121,12 @@ theme_type_variation = &"AlternatePanelContainer"
 
 [node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_type_variation = &"BlueOutlineLabel"
 theme_override_font_sizes/font_size = 24
 text = "Test Name
-"
+DDAWADS"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -134,6 +135,7 @@ autowrap_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"BlueOutlineLabel"
 text = "sdadswa dasdawwd saddawdas"
 autowrap_mode = 2

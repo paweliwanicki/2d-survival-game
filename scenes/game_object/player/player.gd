@@ -3,6 +3,8 @@ extends CharacterBody2D;
 var number_colliding_bodies = 0;
 var base_speed = 0;
 
+@export var arena_time_manager: Node;
+
 @onready var collision_area2d = $CollisionArea2D;
 @onready var damage_interval_timer = $DamageIntervalTimer;
 @onready var health_bar = $HealthBar;
@@ -18,8 +20,10 @@ func _ready():
 	collision_area2d.body_entered.connect(on_body_entered)
 	collision_area2d.body_entered.connect(on_body_exited)
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
+	health_component.health_decreased.connect(on_health_decreased);
 	health_component.health_changed.connect(on_health_changed);
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
+	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
 	update_health_display();
 
 func _process(delta):
@@ -69,8 +73,12 @@ func on_damage_interval_timer_timeout():
 
 
 func on_health_changed():
-	GameEvents.emit_player_damaged();
 	update_health_display();
+
+
+func on_health_decreased():
+	GameEvents.emit_player_damaged();
+	on_health_changed();
 	$HitRandomAudioPlayer2DComponent.play_random();
 	
 	
@@ -85,3 +93,10 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 		velocity_component.max_speed = base_speed + (base_speed * current_upgrades["player_speed"]["quantity"] * .1)
 	
 
+
+func on_arena_difficulty_increased(difficulty: int):
+	var heal_regeneration_quantity = MetaProgression.get_upgrade_count("health_regeneration");
+	if heal_regeneration_quantity > 0 && health_component.current_health < health_component.max_health:
+		var is_thirty_second_interval = (difficulty % 1) == 0;
+		if is_thirty_second_interval:
+			health_component.heal(heal_regeneration_quantity);

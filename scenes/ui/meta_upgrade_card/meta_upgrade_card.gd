@@ -13,7 +13,6 @@ var upgrade: MetaUpgrade;
 func _ready():
 	purchase_sound_button.pressed.connect(on_purchase_sound_button_pressed)
 
-
 func set_meta_upgrade(upgrade: MetaUpgrade):
 	self.upgrade = upgrade;
 	name_label.text = upgrade.name;
@@ -28,7 +27,7 @@ func update_progress():
 	if MetaProgression.save_data["meta_upgrades"].has(upgrade.id):
 		current_quantity = 	MetaProgression.save_data["meta_upgrades"][upgrade.id]["quantity"];
 
-	var currency = MetaProgression.save_data["meta_upgrades_currency"];
+	var currency = MetaProgression.save_data["meta_upgrade_currency"];
 	var percent = currency  / upgrade.price;
 	var is_maxed =  current_quantity >= upgrade.max_quantity;
 	percent = min(percent,1);
@@ -49,8 +48,7 @@ func on_purchase_sound_button_pressed():
 	if upgrade == null:
 		return;
 	MetaProgression.add_meta_upgrade(upgrade);
-	MetaProgression.save_data["meta_upgrades_currency"] -= upgrade.price;
+	MetaProgression.save_data["meta_upgrade_currency"] -= upgrade.price;
 	MetaProgression.save_file();
 	get_tree().call_group("meta_upgrade_card", "update_progress");
-	update_progress();
 	select_card();

@@ -15,15 +15,19 @@ var upgrade_axe_attack_speed = preload("res://resources/upgrades/axe/axe_attack_
 var upgrade_sword_damage = preload("res://resources/upgrades/sword/sword_damage.tres");
 var upgrade_sword_attack_speed = preload("res://resources/upgrades/sword/sword_attack_speed.tres");
 
+# anvil
+var upgrade_anvil = preload("res://resources/upgrades/anvil/anvil.tres");
+var upgrade_anvil_count = preload("res://resources/upgrades/anvil/anvil_count.tres");
 
 # player
 var upgrade_player_speed = preload("res://resources/upgrades/player/player_speed.tres");
 
 func _ready():
 	upgrade_pool.add_item(upgrade_axe, 10);
+	upgrade_pool.add_item(upgrade_anvil, 10);
 	upgrade_pool.add_item(upgrade_sword_attack_speed, 10);
 	upgrade_pool.add_item(upgrade_sword_damage, 10);
-	upgrade_pool.add_item(upgrade_player_speed, 500);
+	upgrade_pool.add_item(upgrade_player_speed, 10);
 	experience_manager.level_up.connect(on_level_up);
 
 
@@ -32,6 +36,8 @@ func update_upgrade_pool(selected_upgrade: AbilityUpgrade):
 		upgrade_pool.add_item(upgrade_axe_damage, 10);
 		upgrade_pool.add_item(upgrade_axe_attack_speed, 10);		
 		
+	if selected_upgrade.id == upgrade_anvil_count.id:
+		upgrade_pool.add_item(upgrade_anvil_count, 5);
 
 func apply_upgrade(upgrade: AbilityUpgrade):
 	if upgrade == null:
