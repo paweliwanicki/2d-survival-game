@@ -12,8 +12,7 @@ var base_speed = 0;
 @onready var abilities = $Abilities;
 @onready var animation_player = $AnimationPlayer;
 @onready var visuals = $Visuals;
-@onready var velocity_component = $VelocityComponent
-
+@onready var velocity_component = $VelocityComponent;
 
 func _ready():
 	base_speed = velocity_component.max_speed;
@@ -22,9 +21,10 @@ func _ready():
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_decreased.connect(on_health_decreased);
 	health_component.health_changed.connect(on_health_changed);
-	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
+	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	update_health_display();
+
 
 func _process(delta):
 	var movement_vector = get_movement_vector();
@@ -93,10 +93,9 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 		velocity_component.max_speed = base_speed + (base_speed * current_upgrades["player_speed"]["quantity"] * .1)
 	
 
-
 func on_arena_difficulty_increased(difficulty: int):
-	var heal_regeneration_quantity = MetaProgression.get_upgrade_count("health_regeneration");
-	if heal_regeneration_quantity > 0 && health_component.current_health < health_component.max_health:
-		var is_thirty_second_interval = (difficulty % 1) == 0;
+	var healh_regeneration_quantity = MetaProgression.get_upgrade_count("health_regeneration");
+	if healh_regeneration_quantity > 0 && health_component.current_health < health_component.max_health:
+		var is_thirty_second_interval = (difficulty % 30) == 0;
 		if is_thirty_second_interval:
-			health_component.heal(heal_regeneration_quantity);
+			health_component.heal(healh_regeneration_quantity);

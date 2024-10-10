@@ -8,7 +8,6 @@ var save_data: Dictionary = {
 	}
 }
 
-
 func _ready():
 	GameEvents.experience_vial_collected.connect(on_experience_collected)
 	load_saved_file();
@@ -28,7 +27,7 @@ func save_file():
 	
 func add_meta_upgrade(upgrade: MetaUpgrade):
 	if !save_data["meta_upgrades"].has(upgrade.id):
-		save_data["meta_upgrades"][upgrade.id] ={
+		save_data["meta_upgrades"][upgrade.id] = {
 			"quantity": 0
 		}
 	
