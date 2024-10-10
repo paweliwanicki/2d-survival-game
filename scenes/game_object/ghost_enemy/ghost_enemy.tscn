@@ -1,0 +1,158 @@
+[gd_scene load_steps=17 format=3 uid="uid://blu5sqrugmy0o"]
+
+[ext_resource type="Script" path="res://scenes/game_object/ghost_enemy/ghost_enemy.gd" id="1_gmy18"]
+[ext_resource type="PackedScene" uid="uid://bp83ytdcnk3y8" path="res://scenes/components/health_component/health_component.tscn" id="2_a7x2t"]
+[ext_resource type="PackedScene" uid="uid://bh4dkh054nbht" path="res://scenes/components/vial_drop_component/vial_drop_component.tscn" id="3_5uqkj"]
+[ext_resource type="PackedScene" uid="uid://cl088l5oxju48" path="res://scenes/components/hit_flash_component/hit_flash_component.tscn" id="4_hhwi6"]
+[ext_resource type="Shader" path="res://scenes/components/hit_flash_component/hit_flash_component.gdshader" id="5_k8bov"]
+[ext_resource type="PackedScene" uid="uid://cjqaxrtp8cyhk" path="res://scenes/components/random_audio_player_2d_component/random_audio_player_2d_component.tscn" id="5_wkkce"]
+[ext_resource type="PackedScene" uid="uid://bwk2itu5romwf" path="res://scenes/components/death_component/death_component.tscn" id="11_f0ew3"]
+[ext_resource type="Texture2D" uid="uid://cd32jm2376pm1" path="res://scenes/game_object/ghost_enemy/ghost_enemy.png" id="12_r6t7n"]
+[ext_resource type="PackedScene" uid="uid://cnvov7sivoblm" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="13_gp4c4"]
+[ext_resource type="PackedScene" uid="uid://cy43r4v65p3li" path="res://scenes/components/velocity_component/velocity_component.tscn" id="15_m635o"]
+
+[sub_resource type="Animation" id="Animation_xejg6"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1.46409, 3.03143, 0.378929, 1.62451, 1.56917),
+"update": 0,
+"values": [0.261799, 0.0, -0.261799, 0.0, 0.261799]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.4),
+"transitions": PackedFloat32Array(2.37841, 2.07053, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.85), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(0.406126, 1, 1),
+"update": 0,
+"values": [Vector2(0, 2), Vector2(0, -2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_v73pf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2hlig"]
+_data = {
+"RESET": SubResource("Animation_v73pf"),
+"walk": SubResource("Animation_xejg6")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxt15"]
+resource_local_to_scene = true
+shader = ExtResource("5_k8bov")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n27qd"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w88k6"]
+radius = 5.0
+
+[node name="GhostEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("1_gmy18")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2hlig")
+}
+autoplay = "walk"
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_a7x2t")]
+max_health = 50.0
+
+[node name="VialDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_5uqkj")]
+drop_percent = 0.85
+health_component = NodePath("../HealthComponent")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("15_m635o")]
+max_speed = 70
+acceleration = 45.0
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_hhwi6")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Visuals/Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_dxt15")
+
+[node name="HitRandomStreamPlayer2DComponent" parent="." instance=ExtResource("5_wkkce")]
+
+[node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("11_f0ew3")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Visuals/Sprite2D")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("12_r6t7n")
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("13_gp4c4")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_n27qd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_w88k6")

@@ -150,6 +150,9 @@ health_component = NodePath("../HealthComponent")
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Visuals/Sprite2D")
 
+[node name="HitRandomStreamPlayer2DComponent" parent="." instance=ExtResource("8_ejvv1")]
+streams = Array[AudioStream]([ExtResource("9_b52f4"), ExtResource("10_2ebin"), ExtResource("11_ypcht"), ExtResource("12_7e5td"), ExtResource("13_668dg")])
+
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals"]
@@ -168,6 +171,3 @@ shape = SubResource("CircleShape2D_dfi5b")
 visible = false
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_tixik")
-
-[node name="HitRandomStreamPlayer2DComponent" parent="." instance=ExtResource("8_ejvv1")]
-streams = Array[AudioStream]([ExtResource("9_b52f4"), ExtResource("10_2ebin"), ExtResource("11_ypcht"), ExtResource("12_7e5td"), ExtResource("13_668dg")])
