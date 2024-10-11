@@ -13,10 +13,10 @@ var upgrade: MetaUpgrade;
 func _ready():
 	purchase_sound_button.pressed.connect(on_purchase_sound_button_pressed)
 
-func set_meta_upgrade(upgrade: MetaUpgrade):
-	self.upgrade = upgrade;
-	name_label.text = upgrade.name;
-	description_label.text = upgrade.description;
+func set_meta_upgrade(meta_upgrade: MetaUpgrade):
+	self.upgrade = meta_upgrade;
+	name_label.text = meta_upgrade.name;
+	description_label.text = meta_upgrade.description;
 	update_progress();
 	
 
